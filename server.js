@@ -37,7 +37,22 @@ app.use(express.static(path.join(__dirname, 'public')));
   *
   */
 app.post('/api/posts', function(req, res, next) {
-  
+  var title = req.body.title;
+  var url = req.body.url;
+  var tags = req.body.tags;
+  var post = new Post({
+    title: title,
+    url: url,
+    tags: tags
+  })
+  post.save(function(err, post){
+    if(err){
+      console.log('err ' , err);
+      res.status(400).json({status: 'Unsuccessfully saved post', err: err});
+    } else {
+      res.status(201).json({status: 'Successfully saved post', post: post});
+    }
+  });
 })
 
 //react router shit

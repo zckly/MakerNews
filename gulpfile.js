@@ -35,7 +35,7 @@ gulp.task('vendor', function() {
     'bower_components/magnific-popup/dist/jquery.magnific-popup.js',
     'bower_components/toastr/toastr.js',
     'bower_components/Materialize/dist/js/materialize.js',
-    'public/js/materialize-tags.min.js'
+    'node_modules/materialize-tags/dist/js/materialize-tags.js'
   ]).pipe(concat('vendor.js'))
     .pipe(gulpif(production, uglify({ mangle: false })))
     .pipe(gulp.dest('public/js'));

@@ -22,7 +22,7 @@ class Navbar extends React.Component {
              <li><a href="mobile.html">Mobile</a></li>
            </ul>
            <ul className="side-nav" id="mobile-demo">
-             <li><a href="sass.html">Sass</a></li>
+             <li><Link to="/add">Submit Post</Link></li>
              <li><a href="badges.html">Components</a></li>
              <li><a href="collapsible.html">Javascript</a></li>
              <li><a href="mobile.html">Mobile</a></li>
