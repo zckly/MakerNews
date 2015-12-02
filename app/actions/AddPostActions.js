@@ -10,7 +10,6 @@ class AddPostActions {
       )
   }
   addPost (title, url, tags) {
-    console.log('in actions', title, url, tags)
     $.ajax({
       type: 'POST',
       url: '/api/posts',

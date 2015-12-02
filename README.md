@@ -1,0 +1,2 @@
+TODOS:
+- Allow text posts

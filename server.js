@@ -32,6 +32,33 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 /**
+  * GET /api/posts
+  * Get all the posts for the front page
+  *
+  */
+app.get('/api/posts', function(req, res, next) {
+  Post.find()
+  .sort( [['_id', -1]] ).limit(30)
+  .exec(function(err, posts) {
+    if (err) return next(err);
+    res.send(posts);
+  });
+})
+
+/**
+  * PUT /api/posts
+  * Updates upvote count
+  *
+  */
+app.put('/api/posts', function(req, res, next) {
+  var postID = req.body.postID
+  Post.findOneAndUpdate( {_id: postID}, {$inc: {upvotes: 1} }, {new: true}, function(err, doc) {
+    if (err) return next(err)
+    return res.status(200).send(doc)
+  })
+})
+
+/**
   * POST /api/posts
   * Adds new post to the database
   *

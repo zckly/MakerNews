@@ -12,7 +12,7 @@ class AddPostStore {
 
   }
   onAddPostFail(errorMessage) {
-
+    toastr.error(errorMessage);
   }
   onUpdatePostTitle(event) {
     this.postTitle = event.target.value;
