@@ -10,6 +10,8 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var Post = require('./models/post');
+var Comment = require('./models/comment');
 var config = require('./config');
 var async = require('async');
 var request = require('request');
@@ -28,6 +30,15 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
+/**
+  * POST /api/posts
+  * Adds new post to the database
+  *
+  */
+app.post('/api/posts', function(req, res, next) {
+  
+})
 
 //react router shit
 app.use(function(req, res) {
