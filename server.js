@@ -82,6 +82,79 @@ app.post('/api/posts', function(req, res, next) {
   });
 })
 
+/**
+  * GET /api/posts/:id
+  * Get specific post for PostPage
+  *
+  */
+app.get('/api/posts/:id', function(req, res, next) {
+  var id = req.params.id;
+  Post.findOne({ _id: id}, function(err, post) {
+    if (err) return next(err);
+    if (!post) {
+      return res.status(404).send({ message: 'post not found.' });
+    }
+    res.send(post);
+  })
+})
+
+/**
+  * GET /api/comments/:id
+  * Get comments for PostPage
+  *
+  */
+app.get('/api/comments/:id', function(req, res, next) {
+  var id = req.params.id;
+  Comment.find({postID: id},function(err, data) {
+    if (err) return next(err);
+    return res.status(200).send(data)
+  })
+})
+
+/**
+  * POST /api/comments
+  * Add new comments
+  *
+  */
+
+app.post('/api/comments', function(req, res, next) {
+  var id = req.body.postID
+  var parentComment = req.body.parentCommentUID
+  var commentBody = req.body.comment;
+  var comment = new Comment({
+    postID: id,
+    creator: 'Zack',
+    creatorUID: '1',
+    parentCommentUID: parentComment,
+    commentBody: commentBody
+  })
+  comment.save(function(err, comment) {
+    if(err) {
+      console.log('err ', err);
+      res.status(400).json({status: 'Unsuccessfully saved comment', err: err});
+    } else {
+      Post.findOneAndUpdate( {_id: id}, {$inc: {commentCount: 1}}, {new:true}, function(err, doc) {
+        if (err) return next(err);
+        return res.status(200).send(doc)
+      })
+    }
+  });
+})
+
+/**
+  * PUT /api/comments
+  * Update upvote count for comments
+  *
+  */
+app.put('/api/comments', function(req, res, next) {
+  var commentID = req.body.commentID
+  Comment.findOneAndUpdate( {_id: commentID}, {$inc: {upvotes: 1} }, {new: true}, function(err, doc) {
+    if (err) return next(err)
+    return res.status(200).send(doc)
+  })
+})
+
+
 //react router shit
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
@@ -105,9 +178,7 @@ var onlineUsers = 0;
 
 io.sockets.on('connection', function(socket) {
   onlineUsers++;
-
   io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });
-
   socket.on('disconnect', function() {
     onlineUsers--;
     io.sockets.emit('onlineUsers', { onlineUsers: onlineUsers });

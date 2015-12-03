@@ -9,7 +9,9 @@ class AddPostStore {
     this.postTags = '';
   }
   onAddPostSuccess(successMessage) {
-
+    this.postUrl = '';
+    this.postTitle = '';
+    this.postTags = '';
   }
   onAddPostFail(errorMessage) {
     toastr.error(errorMessage);

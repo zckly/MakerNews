@@ -1,12 +1,11 @@
 var mongoose = require('mongoose');
 
 var commentSchema = new mongoose.Schema({
-  postID: { type: String, unique: true, index: true },
+  postID: String,
   creator: String,
   creatorUID: String,
-  postID: String,
-  postTitle: String,
-  text: String,
+  commentBody: String,
+  parentCommentUID: String,
   creationDate: { type: Date, default: Date.now() },
   upvotes: { type: Number, default: 0 },
   downvotes: { type: Number, default: 0 },

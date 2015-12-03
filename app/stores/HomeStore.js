@@ -5,7 +5,6 @@ class HomeStore {
   constructor() {
     this.bindActions(HomeActions);
     this.posts = []
-    this.upvoteState = ''
   }
   onGetPostsSuccess(data) {
     this.posts = data
@@ -16,7 +15,7 @@ class HomeStore {
   onUpvoteSuccess(data) {
     var upvotedPost = this.posts[data.index]
     upvotedPost.upvotes = data.upvotes
-    this.upvoteState = 'prefix'
+    upvotedPost.upvoteState = 'disabled'
     toastr.success('upvoted')
   }
   onUpvoteFail(errorMessage) {

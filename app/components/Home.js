@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import HomeStore from '../stores/HomeStore';
 import HomeActions from '../actions/HomeActions';
 
@@ -29,8 +30,8 @@ class Home extends React.Component {
             <a href={post.url}><h5><strong>{post.title}</strong></h5></a>
           </div>
           <div className="col s12">
-            <a onClick={this.handleVoteClick.bind(this, post, index)}><i className={"small material-icons " + this.state.upvoteState}>thumb_up</i></a>
-            <h6>{post.upvotes} upvotes, {post.commentCount} comments</h6>
+            <a className={"waves-effect waves-light blue lighten-1 btn " + post.upvoteState} onClick={post.upvoteState !== "disabled" ? this.handleVoteClick.bind(this, post, index): null}><i className="material-icons">thumb_up</i></a>
+            <h6>{post.upvotes} upvotes, <Link to={'/posts/' + post._id}>{post.commentCount} comments</Link></h6>
           </div>
         </li>
         )
