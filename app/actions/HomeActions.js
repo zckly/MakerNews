@@ -33,4 +33,4 @@ class HomeActions {
   }
 }
 
-export default alt.createActions(HomeActions)
+export default alt.createActions(HomeActions);

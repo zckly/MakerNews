@@ -10,7 +10,7 @@ class HomeStore {
     this.posts = data
   }
   onGetPostsFail(errorMessage) {
-    toastr.error(errorMessage)
+    Materialize.toast(errorMessage, 1000)
   }
   onUpvoteSuccess(data) {
     var upvotedPost = this.posts[data.index]
@@ -19,7 +19,7 @@ class HomeStore {
     toastr.success('upvoted')
   }
   onUpvoteFail(errorMessage) {
-    toastr.error(errorMessage)
+    Materialize.toast(errorMessage, 1000)
   }
 }
 
